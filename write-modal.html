@@ -1,0 +1,205 @@
+<!-- [화면 3] 감자(Gamza) 글쓰기 모달 컴포넌트 마크업 -->
+<div id="writeModalOverlay" class="gamza-modal-overlay" aria-hidden="true">
+  <div class="gamza-modal-container" role="dialog" aria-modal="true" aria-labelledby="writeModalTitle">
+    <!-- 모달 헤더 -->
+    <header class="gamza-modal-header">
+      <div class="header-title-box">
+        <span class="potato-icon" aria-hidden="true">🥔</span>
+        <h2 id="writeModalTitle" class="gamza-modal-title">내 감자 분양하기 (글쓰기)</h2>
+      </div>
+      <button type="button" id="closeWriteModalBtn" class="gamza-modal-close-btn" aria-label="모달 닫기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- 모달 바디 (스크롤 영역) -->
+    <div class="gamza-modal-body">
+      <form id="writeProductForm" novalidate>
+        <!-- 1. 상품 이미지 등록 섹션 -->
+        <div class="form-group image-upload-group">
+          <label class="form-label required">상품 사진 등록 <span class="badge-optional">(최대 1장)</span></label>
+          <p class="form-helper-text">사진을 직접 업로드하거나 이미지 URL을 입력할 수 있어요.</p>
+
+          <div class="image-uploader-wrapper">
+            <!-- 이미지 미리보기 박스 -->
+            <div id="imagePreviewContainer" class="image-preview-container">
+              <div id="imagePlaceholder" class="image-placeholder">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#B36B22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>사진 미리보기</span>
+              </div>
+              <img id="imagePreview" class="image-preview-img hidden" alt="상품 미리보기" />
+              <button type="button" id="removeImageBtn" class="remove-image-btn hidden" title="이미지 삭제">✕</button>
+            </div>
+
+            <!-- 업로드 컨트롤 영역 -->
+            <div class="image-inputs">
+              <!-- 파일 선택 버튼 커스텀 -->
+              <div class="file-input-wrapper">
+                <input type="file" id="productImageFile" accept="image/*" class="visually-hidden" />
+                <label for="productImageFile" class="gamza-btn btn-secondary file-upload-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span>내 기기에서 사진 선택</span>
+                </label>
+              </div>
+
+              <!-- 이미지 URL 직접 입력 -->
+              <div class="url-input-wrapper">
+                <input type="url" id="productImageUrl" class="gamza-input" placeholder="또는 이미지 URL을 입력하세요 (https://...)" />
+                <button type="button" id="applyImageUrlBtn" class="gamza-btn btn-outline btn-sm">적용</button>
+              </div>
+
+              <!-- 샘플 이미지 프리셋 버튼 -->
+              <div class="sample-image-presets">
+                <span class="sample-label">빠른 샘플 이미지:</span>
+                <button type="button" class="btn-chip" data-sample="potato">🥔 노릇노릇 감자</button>
+                <button type="button" class="btn-chip" data-sample="laptop">💻 맥북/노트북</button>
+                <button type="button" class="btn-chip" data-sample="chair">🪑 원목 감성 의자</button>
+                <button type="button" class="btn-chip" data-sample="headphones">🎧 헤드폰</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 상품명 -->
+        <div class="form-group">
+          <label for="productTitle" class="form-label required">상품명</label>
+          <input 
+            type="text" 
+            id="productTitle" 
+            name="title" 
+            class="gamza-input" 
+            placeholder="상품명을 입력해주세요 (예: 맛있는 강원도 햇감자 5kg)" 
+            maxlength="60" 
+            required 
+          />
+          <div class="field-feedback" id="titleFeedback"></div>
+        </div>
+
+        <!-- 3. 카테고리 -->
+        <div class="form-group">
+          <label for="productCategory" class="form-label required">카테고리</label>
+          <div class="select-wrapper">
+            <select id="productCategory" name="category" class="gamza-select" required>
+              <option value="" disabled selected>카테고리를 선택해주세요</option>
+              <option value="디지털기기">📱 디지털기기</option>
+              <option value="가구/인테리어">🛋️ 가구/인테리어</option>
+              <option value="의류">👕 의류</option>
+              <option value="생활가전">🍳 생활가전</option>
+              <option value="도서/티켓">📚 도서/티켓</option>
+              <option value="기타">🥔 기타</option>
+            </select>
+          </div>
+          <div class="field-feedback" id="categoryFeedback"></div>
+        </div>
+
+        <!-- 4. 가격 -->
+        <div class="form-group">
+          <div class="label-with-addon">
+            <label for="productPrice" class="form-label required">판매 가격</label>
+            <label class="free-sharing-checkbox">
+              <input type="checkbox" id="freeSharingCheck" />
+              <span>무료 나눔 (0원)</span>
+            </label>
+          </div>
+          <div class="price-input-wrapper">
+            <input 
+              type="text" 
+              inputmode="numeric" 
+              id="productPrice" 
+              name="price" 
+              class="gamza-input" 
+              placeholder="가격을 입력해주세요 (숫자만)" 
+              required 
+            />
+            <span class="currency-unit">원</span>
+          </div>
+          <div class="price-formatted-guide" id="priceFormattedGuide">
+            입력된 가격: <strong id="priceKoreanFormat">0원</strong>
+          </div>
+          <div class="field-feedback" id="priceFeedback"></div>
+        </div>
+
+        <!-- 5. 거래 동네 -->
+        <div class="form-group">
+          <label for="productLocation" class="form-label required">거래 동네</label>
+          <div class="location-input-wrapper">
+            <input 
+              type="text" 
+              id="productLocation" 
+              name="location" 
+              class="gamza-input" 
+              placeholder="예: 역삼1동, 강원도 춘천시 효자동" 
+              maxlength="40" 
+              value="역삼1동"
+              required 
+            />
+            <button type="button" id="myLocationBtn" class="gamza-btn btn-outline btn-sm">내 동네 찾기</button>
+          </div>
+          <div class="location-presets">
+            <button type="button" class="btn-location-chip" data-loc="역삼1동">📍 역삼1동</button>
+            <button type="button" class="btn-location-chip" data-loc="서초2동">📍 서초2동</button>
+            <button type="button" class="btn-location-chip" data-loc="춘천시 효자동">📍 춘천시 효자동</button>
+            <button type="button" class="btn-location-chip" data-loc="판교동">📍 판교동</button>
+          </div>
+          <div class="field-feedback" id="locationFeedback"></div>
+        </div>
+
+        <!-- 6. 판매 상태 -->
+        <div class="form-group">
+          <label class="form-label">판매 상태</label>
+          <div class="status-radio-group">
+            <label class="status-radio-item">
+              <input type="radio" name="status" value="판매중" checked />
+              <span class="radio-chip is-onsale">판매중</span>
+            </label>
+            <label class="status-radio-item">
+              <input type="radio" name="status" value="예약중" />
+              <span class="radio-chip is-reserved">예약중</span>
+            </label>
+            <label class="status-radio-item">
+              <input type="radio" name="status" value="거래완료" />
+              <span class="radio-chip is-completed">거래 완료</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 7. 자세한 설명 -->
+        <div class="form-group">
+          <div class="label-with-addon">
+            <label for="productDescription" class="form-label required">자세한 설명</label>
+            <span class="char-count"><span id="currentDescLen">0</span> / 1000자</span>
+          </div>
+          <textarea 
+            id="productDescription" 
+            name="description" 
+            class="gamza-textarea" 
+            rows="6" 
+            maxlength="1000"
+            placeholder="상품 상태(구입 시기, 사용감, 하자 여부 등)와 직거래 선호 장소를 자세히 적어주시면 더 빠르게 분양돼요! 감자밭 이웃을 배려하는 따뜻한 거래 매너를 지켜주세요 🥔" 
+            required
+          ></textarea>
+          <div class="field-feedback" id="descriptionFeedback"></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- 모달 푸터 (하단 고정 버튼) -->
+    <footer class="gamza-modal-footer">
+      <button type="button" id="cancelWriteBtn" class="gamza-btn btn-secondary">취소</button>
+      <button type="button" id="submitWriteBtn" class="gamza-btn btn-primary">
+        <span class="btn-text">작성 완료 🥔</span>
+      </button>
+    </footer>
+  </div>
+</div>

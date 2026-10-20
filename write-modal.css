@@ -1,0 +1,718 @@
+/* ==========================================================================
+   [화면 3] 감자(Gamza) 글쓰기 모달 스타일 시트
+   테마 컬러:
+   - Primary Brown: #945214 (감자 진브라운)
+   - Secondary Brown: #B36B22 (감자 브라운)
+   - Light Warm Brown: #F7EFE8 / #FDFBF7 (따뜻한 감자밭 배경)
+   - Border Color: #E5D5C5 / #D8C3B0
+   - Accent / Point: #D97706
+   - Error Red: #DC2626
+========================================================================== */
+
+:root {
+  --gamza-brown-primary: #945214;
+  --gamza-brown-hover: #7b410d;
+  --gamza-brown-light: #B36B22;
+  --gamza-brown-accent: #E08E45;
+  --gamza-bg-cream: #FAF6F0;
+  --gamza-bg-light: #FDFBF9;
+  --gamza-border-soft: #EADBC8;
+  --gamza-border-focus: #B36B22;
+  --gamza-text-main: #2D231A;
+  --gamza-text-muted: #79685B;
+  --gamza-error: #E53E3E;
+  --gamza-error-bg: #FFF5F5;
+  --gamza-success: #38A169;
+  --gamza-shadow-modal: 0 20px 40px rgba(70, 40, 15, 0.22), 0 4px 12px rgba(70, 40, 15, 0.12);
+  --gamza-radius-lg: 18px;
+  --gamza-radius-md: 12px;
+  --gamza-radius-sm: 8px;
+  --gamza-radius-full: 9999px;
+  --gamza-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   모달 오버레이 & 컨테이너
+-------------------------------------------------------------------------- */
+.gamza-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(45, 30, 18, 0.58);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.gamza-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gamza-modal-container {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: var(--gamza-radius-lg);
+  box-shadow: var(--gamza-shadow-modal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--gamza-border-soft);
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gamza-modal-overlay.is-open .gamza-modal-container {
+  transform: translateY(0) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   모달 헤더
+-------------------------------------------------------------------------- */
+.gamza-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: var(--gamza-bg-cream);
+  border-bottom: 1px solid var(--gamza-border-soft);
+}
+
+.header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.potato-icon {
+  font-size: 24px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(148, 82, 20, 0.2));
+}
+
+.gamza-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gamza-text-main);
+  letter-spacing: -0.02em;
+}
+
+.gamza-modal-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--gamza-text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--gamza-transition);
+}
+
+.gamza-modal-close-btn:hover {
+  background-color: rgba(148, 82, 20, 0.1);
+  color: var(--gamza-brown-primary);
+  transform: rotate(90deg);
+}
+
+/* --------------------------------------------------------------------------
+   모달 바디 & 스크롤
+-------------------------------------------------------------------------- */
+.gamza-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  background-color: #FFFFFF;
+}
+
+.gamza-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.gamza-modal-body::-webkit-scrollbar-thumb {
+  background: var(--gamza-border-soft);
+  border-radius: 3px;
+}
+.gamza-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--gamza-brown-light);
+}
+
+/* --------------------------------------------------------------------------
+   폼 그룹 공통 요소
+-------------------------------------------------------------------------- */
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gamza-text-main);
+  margin-bottom: 7px;
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--gamza-error);
+  font-weight: 700;
+}
+
+.badge-optional {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--gamza-text-muted);
+}
+
+.form-helper-text {
+  margin: 0 0 10px 0;
+  font-size: 0.82rem;
+  color: var(--gamza-text-muted);
+}
+
+.label-with-addon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.label-with-addon .form-label {
+  margin-bottom: 0;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  color: var(--gamza-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   인풋, 셀렉트, 텍스트에어리어 기본 스타일
+-------------------------------------------------------------------------- */
+.gamza-input,
+.gamza-select,
+.gamza-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--gamza-text-main);
+  background-color: var(--gamza-bg-light);
+  border: 1.5px solid var(--gamza-border-soft);
+  border-radius: var(--gamza-radius-md);
+  outline: none;
+  transition: var(--gamza-transition);
+  font-family: inherit;
+}
+
+.gamza-input::placeholder,
+.gamza-textarea::placeholder {
+  color: #B5A699;
+}
+
+.gamza-input:focus,
+.gamza-select:focus,
+.gamza-textarea:focus {
+  background-color: #FFFFFF;
+  border-color: var(--gamza-border-focus);
+  box-shadow: 0 0 0 3.5px rgba(179, 107, 34, 0.16);
+}
+
+.gamza-input.is-invalid,
+.gamza-select.is-invalid,
+.gamza-textarea.is-invalid {
+  border-color: var(--gamza-error);
+  background-color: var(--gamza-error-bg);
+}
+
+.gamza-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.55;
+}
+
+/* 셀렉트 드롭다운 */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--gamza-brown-light);
+  pointer-events: none;
+}
+
+.gamza-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   1. 이미지 업로드 & 프리뷰 영역
+-------------------------------------------------------------------------- */
+.image-uploader-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.image-preview-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  border: 2px dashed var(--gamza-border-soft);
+  border-radius: var(--gamza-radius-md);
+  background: var(--gamza-bg-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: var(--gamza-transition);
+}
+
+.image-preview-container:hover {
+  border-color: var(--gamza-brown-light);
+}
+
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--gamza-brown-light);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 8px;
+}
+
+.image-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(45, 35, 26, 0.75);
+  color: #FFFFFF;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--gamza-transition);
+}
+
+.remove-image-btn:hover {
+  background: var(--gamza-error);
+  transform: scale(1.1);
+}
+
+.image-inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+}
+
+.url-input-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.url-input-wrapper .gamza-input {
+  font-size: 0.88rem;
+  padding: 8px 12px;
+}
+
+.sample-image-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.sample-label {
+  font-size: 0.76rem;
+  color: var(--gamza-text-muted);
+  width: 100%;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.btn-chip {
+  background: var(--gamza-bg-cream);
+  border: 1px solid var(--gamza-border-soft);
+  color: var(--gamza-brown-primary);
+  font-size: 0.75rem;
+  padding: 4px 9px;
+  border-radius: var(--gamza-radius-full);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.btn-chip:hover {
+  background: #EEDCCE;
+  border-color: var(--gamza-brown-light);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   4. 가격 및 무료나눔 스타일
+-------------------------------------------------------------------------- */
+.price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-unit {
+  position: absolute;
+  right: 14px;
+  font-weight: 600;
+  color: var(--gamza-brown-primary);
+  pointer-events: none;
+}
+
+.price-formatted-guide {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--gamza-brown-light);
+  background: var(--gamza-bg-cream);
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--gamza-radius-sm);
+  border: 1px solid var(--gamza-border-soft);
+}
+
+.price-formatted-guide strong {
+  color: var(--gamza-brown-primary);
+  font-size: 0.88rem;
+}
+
+.free-sharing-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--gamza-brown-primary);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.free-sharing-checkbox input[type="checkbox"] {
+  accent-color: var(--gamza-brown-primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   5. 거래 동네 스타일
+-------------------------------------------------------------------------- */
+.location-input-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.location-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.btn-location-chip {
+  background: #FFFFFF;
+  border: 1px dashed var(--gamza-border-soft);
+  color: var(--gamza-text-muted);
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: var(--gamza-radius-full);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.btn-location-chip:hover {
+  background: var(--gamza-bg-cream);
+  color: var(--gamza-brown-primary);
+  border-color: var(--gamza-brown-light);
+}
+
+/* --------------------------------------------------------------------------
+   6. 판매 상태 라디오 그룹
+-------------------------------------------------------------------------- */
+.status-radio-group {
+  display: flex;
+  gap: 10px;
+}
+
+.status-radio-item {
+  flex: 1;
+  cursor: pointer;
+}
+
+.status-radio-item input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  border: 1.5px solid var(--gamza-border-soft);
+  background-color: var(--gamza-bg-light);
+  color: var(--gamza-text-muted);
+  transition: var(--gamza-transition);
+  text-align: center;
+}
+
+.radio-chip:hover {
+  border-color: var(--gamza-brown-light);
+  background: #FFFFFF;
+}
+
+.status-radio-item input[type="radio"]:checked + .radio-chip {
+  background-color: var(--gamza-bg-cream);
+  border-color: var(--gamza-brown-primary);
+  color: var(--gamza-brown-primary);
+  box-shadow: 0 2px 6px rgba(148, 82, 20, 0.15);
+}
+
+.status-radio-item input[type="radio"]:checked + .radio-chip.is-onsale::before {
+  content: "🟢 ";
+  font-size: 0.75rem;
+}
+.status-radio-item input[type="radio"]:checked + .radio-chip.is-reserved::before {
+  content: "🟡 ";
+  font-size: 0.75rem;
+}
+.status-radio-item input[type="radio"]:checked + .radio-chip.is-completed::before {
+  content: "⚪ ";
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   피드백 / 유효성 검사 에러 메시지
+-------------------------------------------------------------------------- */
+.field-feedback {
+  min-height: 18px;
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: var(--gamza-error);
+  font-weight: 500;
+  display: none;
+}
+
+.field-feedback.has-error {
+  display: block;
+  animation: fadeInFeedback 0.2s ease-out;
+}
+
+@keyframes fadeInFeedback {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   버튼 컴포넌트
+-------------------------------------------------------------------------- */
+.gamza-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--gamza-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--gamza-transition);
+  font-family: inherit;
+  line-height: 1.2;
+}
+
+.gamza-btn.btn-primary {
+  background-color: var(--gamza-brown-primary);
+  color: #FFFFFF;
+  box-shadow: 0 3px 8px rgba(148, 82, 20, 0.28);
+}
+
+.gamza-btn.btn-primary:hover {
+  background-color: var(--gamza-brown-hover);
+  box-shadow: 0 5px 14px rgba(148, 82, 20, 0.38);
+  transform: translateY(-1px);
+}
+
+.gamza-btn.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.gamza-btn.btn-secondary {
+  background-color: var(--gamza-bg-cream);
+  color: var(--gamza-brown-primary);
+  border-color: var(--gamza-border-soft);
+}
+
+.gamza-btn.btn-secondary:hover {
+  background-color: #EEDCCE;
+  border-color: var(--gamza-brown-light);
+}
+
+.gamza-btn.btn-outline {
+  background: transparent;
+  border-color: var(--gamza-brown-light);
+  color: var(--gamza-brown-primary);
+}
+
+.gamza-btn.btn-outline:hover {
+  background-color: var(--gamza-bg-cream);
+}
+
+.gamza-btn.btn-sm {
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   모달 푸터
+-------------------------------------------------------------------------- */
+.gamza-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--gamza-bg-cream);
+  border-top: 1px solid var(--gamza-border-soft);
+}
+
+.gamza-modal-footer .btn-secondary {
+  flex: 0 0 100px;
+}
+
+.gamza-modal-footer .btn-primary {
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   유틸리티 클래스
+-------------------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   모바일 반응형 최적화 (풀스크린 바텀 시트)
+-------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .gamza-modal-overlay {
+    padding: 0;
+    align-items: flex-end; /* 아래에서 올라오는 바텀 시트 */
+  }
+
+  .gamza-modal-container {
+    max-width: 100%;
+    max-height: 94vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transform: translateY(100%);
+  }
+
+  .gamza-modal-overlay.is-open .gamza-modal-container {
+    transform: translateY(0);
+  }
+
+  .gamza-modal-header {
+    padding: 16px 18px;
+  }
+
+  .gamza-modal-body {
+    padding: 18px 16px;
+  }
+
+  .image-uploader-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .image-preview-container {
+    width: 100%;
+    height: 160px;
+  }
+
+  .gamza-modal-footer {
+    padding: 14px 16px;
+  }
+}
